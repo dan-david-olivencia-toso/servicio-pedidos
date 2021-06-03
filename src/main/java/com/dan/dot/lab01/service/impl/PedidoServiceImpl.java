@@ -4,14 +4,12 @@ import com.dan.dot.lab01.domain.DetallePedido;
 import com.dan.dot.lab01.domain.EstadoPedido;
 import com.dan.dot.lab01.domain.Pedido;
 import com.dan.dot.lab01.repository.PedidoRepository;
-import com.dan.dot.lab01.service.artemis.DispatcherService;
 import com.dan.dot.lab01.service.PedidoService;
 import com.dan.dot.lab01.service.RiesgoCrediticioService;
 import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.jms.JMSException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +23,6 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Autowired //Configuration necesaria para guardar en memoria
     PedidoRepository pedidoRepository;
-
-    @Autowired //Configuration necesaria para guardar en memoria
-    DispatcherService dispatcherService;
 
     public PedidoServiceImpl(RiesgoCrediticioService riesgoService) {
         this.riesgoService = riesgoService;
@@ -60,12 +55,6 @@ public class PedidoServiceImpl implements PedidoService {
         }
 
         pedidoRepository.save(p);
-
-        try {
-            dispatcherService.enviarMensaje("ID pedido: "+p.getId());
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
 
         return p;
     }

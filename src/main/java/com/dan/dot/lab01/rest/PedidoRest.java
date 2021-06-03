@@ -3,21 +3,20 @@ package com.dan.dot.lab01.rest;
 import com.dan.dot.lab01.domain.DetallePedido;
 import com.dan.dot.lab01.domain.Pedido;
 import com.dan.dot.lab01.service.PedidoService;
+import com.dan.dot.lab01.service.DetallePedidoProducer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/api/pedido")
@@ -26,6 +25,11 @@ public class PedidoRest {
 
     @Autowired
     PedidoService pedidoService;
+
+    @Autowired
+    DetallePedidoProducer detallePedidoProducer;
+
+    private static final Logger logger = LoggerFactory.getLogger(PedidoRest.class);
 
     @GetMapping(path = "/{id}")
     @ApiOperation(value = "Busca un pedido por id")
@@ -51,7 +55,6 @@ public class PedidoRest {
         }
         return ResponseEntity.of(dp);
     }
-
 
     @GetMapping(path = "/obra/{idObra}")
     @ApiOperation(value = "Busca pedidos por id de obra")
@@ -107,6 +110,7 @@ public class PedidoRest {
         } catch (Exception e1) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e1.getMessage());
         }
+        detallePedidoProducer.enviarDetallePedido(p.getDetalle());
         return ResponseEntity.ok(p);
     }
 
@@ -159,5 +163,6 @@ public class PedidoRest {
         }
         return ResponseEntity.ok().build();
     }
+
 }
 
