@@ -3,13 +3,15 @@ package com.dan.dot.lab01.rest;
 import com.dan.dot.lab01.domain.DetallePedido;
 import com.dan.dot.lab01.domain.Pedido;
 import com.dan.dot.lab01.service.PedidoService;
-import com.dan.dot.lab01.service.DetallePedidoProducer;
+import com.dan.dot.lab01.service.rabbitmq.RabbitConfig;
+import com.dan.dot.lab01.service.rabbitmq.RabbitProducer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +26,10 @@ import java.util.Optional;
 public class PedidoRest {
 
     @Autowired
-    PedidoService pedidoService;
+    private PedidoService pedidoService;
 
     @Autowired
-    DetallePedidoProducer detallePedidoProducer;
+    private RabbitProducer rabbitProducer;
 
     private static final Logger logger = LoggerFactory.getLogger(PedidoRest.class);
 
@@ -103,14 +105,14 @@ public class PedidoRest {
     }
 
     @PostMapping
-    public ResponseEntity<?> crearPedido(@RequestBody Pedido pedido){
+    public ResponseEntity<?> crearPedido(@RequestBody Pedido pedido) throws Exception {
         Pedido p = null;
         try {
             p = this.pedidoService.guardarPedido(pedido);
         } catch (Exception e1) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e1.getMessage());
         }
-        detallePedidoProducer.enviarDetallePedido(p.getDetalle());
+        rabbitProducer.produce(p.getDetalle());
         return ResponseEntity.ok(p);
     }
 
