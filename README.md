@@ -1,4 +1,4 @@
-# laboratorio-01
+# servicio-pedidos
 
 Microservicio para gestión de Pedidos
 
