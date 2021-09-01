@@ -3,14 +3,19 @@ package com.dan.dot.lab01.rest;
 import com.dan.dot.lab01.domain.DetallePedido;
 import com.dan.dot.lab01.domain.Pedido;
 import com.dan.dot.lab01.service.PedidoService;
-import com.dan.dot.lab01.service.DetallePedidoProducer;
+import com.dan.dot.lab01.service.rabbitmq.RabbitConfiguration;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +29,10 @@ import java.util.Optional;
 public class PedidoRest {
 
     @Autowired
-    PedidoService pedidoService;
+    private PedidoService pedidoService;
 
-    @Autowired
-    DetallePedidoProducer detallePedidoProducer;
+    @Autowired private RabbitTemplate amqpTemplate;
+    @Autowired private Queue rabbitQueue;
 
     private static final Logger logger = LoggerFactory.getLogger(PedidoRest.class);
 
@@ -103,14 +108,17 @@ public class PedidoRest {
     }
 
     @PostMapping
-    public ResponseEntity<?> crearPedido(@RequestBody Pedido pedido){
+    public ResponseEntity<?> crearPedido(@RequestBody Pedido pedido) throws Exception {
         Pedido p = null;
         try {
             p = this.pedidoService.guardarPedido(pedido);
         } catch (Exception e1) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e1.getMessage());
         }
-        detallePedidoProducer.enviarDetallePedido(p.getDetalle());
+        ApplicationContext context = new AnnotationConfigApplicationContext(RabbitConfiguration.class);
+        AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
+        amqpTemplate.convertAndSend(p.getDetalle());
+        System.out.println("Enviado a RabbitMQ: " + p.getDetalle());
         return ResponseEntity.ok(p);
     }
 
