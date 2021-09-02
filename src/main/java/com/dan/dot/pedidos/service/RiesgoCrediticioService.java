@@ -1,4 +1,4 @@
-package com.dan.dot.lab01.service;
+package com.dan.dot.pedidos.service;
 
 public interface RiesgoCrediticioService {
 

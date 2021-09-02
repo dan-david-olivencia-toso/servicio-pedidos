@@ -1,4 +1,4 @@
-package com.dan.dot.lab01.service.rabbitmq;
+package com.dan.dot.pedidos.service.rabbitmq;
 
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;

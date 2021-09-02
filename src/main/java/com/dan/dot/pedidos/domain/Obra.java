@@ -1,6 +1,4 @@
-package com.dan.dot.lab01.domain;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package com.dan.dot.pedidos.domain;
 
 import javax.persistence.*;
 

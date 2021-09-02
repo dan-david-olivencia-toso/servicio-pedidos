@@ -1,7 +1,7 @@
-package com.dan.dot.lab01.service;
+package com.dan.dot.pedidos.service;
 
-import com.dan.dot.lab01.domain.DetallePedido;
-import com.dan.dot.lab01.domain.Pedido;
+import com.dan.dot.pedidos.domain.DetallePedido;
+import com.dan.dot.pedidos.domain.Pedido;
 
 import java.util.List;
 import java.util.Optional;

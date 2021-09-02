@@ -1,6 +1,6 @@
-package com.dan.dot.lab01.service.impl;
+package com.dan.dot.pedidos.service.impl;
 
-import com.dan.dot.lab01.service.RiesgoCrediticioService;
+import com.dan.dot.pedidos.service.RiesgoCrediticioService;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dan.dot</groupId>
-    <artifactId>lab01</artifactId>
+    <artifactId>pedidos</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>stock</name>
     <description>Microservicio de Pedidos - Desarrollo de Aplicaciones en la Nube 2021 - UTN FRSF</description>

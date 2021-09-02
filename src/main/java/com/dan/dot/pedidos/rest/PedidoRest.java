@@ -1,9 +1,9 @@
-package com.dan.dot.lab01.rest;
+package com.dan.dot.pedidos.rest;
 
-import com.dan.dot.lab01.domain.DetallePedido;
-import com.dan.dot.lab01.domain.Pedido;
-import com.dan.dot.lab01.service.PedidoService;
-import com.dan.dot.lab01.service.rabbitmq.RabbitConfiguration;
+import com.dan.dot.pedidos.domain.DetallePedido;
+import com.dan.dot.pedidos.domain.Pedido;
+import com.dan.dot.pedidos.service.PedidoService;
+import com.dan.dot.pedidos.service.rabbitmq.RabbitConfiguration;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
