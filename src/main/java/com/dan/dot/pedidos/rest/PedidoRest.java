@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api/pedido")
 @Api(value = "PedidoRest", description = "Permite gestionar los pedidos de la empresa")
@@ -68,33 +69,6 @@ public class PedidoRest {
         List<Pedido> lp = null;
         try {
             lp = this.pedidoService.buscarPedidosPorIdObra(idObra);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
-        return ResponseEntity.ok(lp);
-    }
-
-    @GetMapping(path = "/cliente/{idCliente}")
-    @ApiOperation(value = "Busca pedidos por id de cliente")
-    public ResponseEntity<?> pedidoPorIdCliente(@PathVariable String idCliente){
-
-        List<Pedido> lp = null;
-        try {
-            lp = this.pedidoService.buscarPedidosPorIdCliente(idCliente);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
-        return ResponseEntity.ok(lp);
-    }
-
-    @GetMapping(path = "/cliente/cuit/{cuit}")
-    @ApiOperation(value = "Busca pedidos por cuit del cliente")
-    public ResponseEntity<?> pedidoPorCuit(@PathVariable String cuit){
-        List<Pedido> lp = null;
-        try {
-            lp = this.pedidoService.buscarPedidosPorCuit(cuit);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

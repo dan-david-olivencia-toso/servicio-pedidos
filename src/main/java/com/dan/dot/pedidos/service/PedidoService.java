@@ -16,8 +16,8 @@ public interface PedidoService {
     Optional<Pedido> buscarPedidoPorId(Integer id) throws RecursoNoEncontradoException;
     Optional<DetallePedido> buscarDetallePedidoPorIdEnPedido(Integer idPedido,Integer idDetalle) throws RecursoNoEncontradoException;
     List<Pedido> buscarPedidosPorIdObra(Integer idObra);
-    List<Pedido> buscarPedidosPorIdCliente(String idCliente);
-    List<Pedido> buscarPedidosPorCuit(String cuit);
+    // TODO: Implementar este método
+//    List<Pedido> buscarPedidosPorIdCliente(String idCliente);
     void borrarPedido(Integer id) throws RecursoNoEncontradoException;
     void borrarDetallePedidoDePedido(Integer idPedido, Integer idDetalle) throws RecursoNoEncontradoException;
 
