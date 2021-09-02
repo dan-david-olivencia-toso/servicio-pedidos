@@ -1,11 +1,11 @@
-package com.dan.dot.lab01.service.impl;
+package com.dan.dot.pedidos.service.impl;
 
-import com.dan.dot.lab01.domain.DetallePedido;
-import com.dan.dot.lab01.domain.EstadoPedido;
-import com.dan.dot.lab01.domain.Pedido;
-import com.dan.dot.lab01.repository.PedidoRepository;
-import com.dan.dot.lab01.service.PedidoService;
-import com.dan.dot.lab01.service.RiesgoCrediticioService;
+import com.dan.dot.pedidos.domain.DetallePedido;
+import com.dan.dot.pedidos.domain.EstadoPedido;
+import com.dan.dot.pedidos.domain.Pedido;
+import com.dan.dot.pedidos.repository.PedidoRepository;
+import com.dan.dot.pedidos.service.PedidoService;
+import com.dan.dot.pedidos.service.RiesgoCrediticioService;
 import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
