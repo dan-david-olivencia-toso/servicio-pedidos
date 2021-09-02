@@ -1,19 +1,13 @@
 package com.dan.dot.lab01.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "estado_pedido")
 public class EstadoPedido {
 
-	public EstadoPedido() {
-		
-	}
-	
-	public EstadoPedido(Integer id, String estado) {
-		super();
-		this.id = id;
-		this.estado = estado;
-	}
-	
-	private Integer id;
-	private String estado;
 	public Integer getId() {
 		return id;
 	}
@@ -27,11 +21,17 @@ public class EstadoPedido {
 		this.estado = estado;
 	}
 
+	@Id
+	private Integer id;
+	private String estado;
+
 	@Override
 	public String toString() {
-		return "EstadoPedido{" +
-				"id=" + id +
-				", estado='" + estado + '\'' +
-				'}';
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Id: ").append(this.id).append("\n");
+		sb.append("Estado: ").append(this.estado).append("\n");
+
+		return sb.toString();
 	}
 }

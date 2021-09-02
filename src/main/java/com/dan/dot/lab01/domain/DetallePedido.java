@@ -1,27 +1,15 @@
 package com.dan.dot.lab01.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "detalle_pedido")
 public class DetallePedido {
-	private Integer id;
-	private Producto producto;
-	private Integer cantidad;
-	private Double precio;
-	
-	public DetallePedido(){
-		
-	}
-	
-	
-	public DetallePedido(Producto producto, Integer cantidad, Double precio) {
-		super();
-		this.producto = producto;
-		this.cantidad = cantidad;
-		this.precio = precio;
-	}
 
-
-	public Integer getId() {
-		return id;
-	}
+	public Integer getId() { return id; }
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -43,14 +31,34 @@ public class DetallePedido {
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
+	public Pedido getPedido() { return pedido; }
+	public void setPedido(Pedido pedido) { this.pedido = pedido; }
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "id_producto", referencedColumnName = "id")
+	private Producto producto;
+	@NotNull
+	private Integer cantidad;
+	@NotNull
+	private Double precio;
+
+
+	@ManyToOne
+	@JoinColumn(name = "id_pedido", referencedColumnName = "id")
+	@JsonBackReference
+	private Pedido pedido;
 
 	@Override
 	public String toString() {
-		return "DetallePedido{" +
-				"id=" + id +
-				", producto=" + producto +
-				", cantidad=" + cantidad +
-				", precio=" + precio +
-				'}';
+		StringBuilder sb = new StringBuilder();
+		sb.append("Id: ").append(this.id).append("\n");
+		sb.append("Producto: ").append(this.producto).append("\n");
+		sb.append("Cantidad: ").append(this.cantidad).append("\n");
+		sb.append("Precio: ").append(this.precio).append("\n");
+		sb.append(this.producto.toString());
+		return sb.toString();
 	}
 }

@@ -1,25 +1,25 @@
 package com.dan.dot.lab01.domain;
 
-import java.time.Instant;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "pedido")
 public class Pedido {
 
-	private Integer id;
-	private Instant fechaPedido;
-	private Obra obra;
-	private List<DetallePedido> detalle;
-	private EstadoPedido estado;
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Instant getFechaPedido() {
+	public Date getFechaPedido() {
 		return fechaPedido;
 	}
-	public void setFechaPedido(Instant fechaPedido) {
+	public void setFechaPedido(Date fechaPedido) {
 		this.fechaPedido = fechaPedido;
 	}
 	public Obra getObra() {
@@ -41,14 +41,33 @@ public class Pedido {
 		this.estado = estado;
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = "fecha_pedido")
+	private Date fechaPedido;
+
+	@ManyToOne
+	@JoinColumn(name = "id_obra", referencedColumnName = "id")
+	@NotNull
+	private Obra obra;
+
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pedido")
+	private List<DetallePedido> detalle;
+
+	@ManyToOne
+	@JoinColumn(name = "id_estado", referencedColumnName = "id")
+	private EstadoPedido estado;
 	@Override
 	public String toString() {
-		return "Pedido{" +
-				"id=" + id +
-				", fechaPedido=" + fechaPedido +
-				", obra=" + obra +
-				", detalle=" + detalle +
-				", estado=" + estado +
-				'}';
+		StringBuilder sb = new StringBuilder();
+		sb.append("Id: ").append(this.id).append("\n");
+		sb.append("Fecha Pedido: ").append(this.fechaPedido).append("\n");
+		sb.append("Obra: ").append(this.obra).append("\n");
+		sb.append("Estado: ").append(this.estado).append("\n");
+		sb.append("Detalle: ").append("\n");
+		sb.append(this.detalle.toString());
+		return sb.toString();
 	}
 }

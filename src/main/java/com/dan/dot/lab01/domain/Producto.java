@@ -1,11 +1,11 @@
 package com.dan.dot.lab01.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "producto")
 public class Producto {
 
-	private Integer id;
-	private String descripcion;
-	private Double precio;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -24,13 +24,23 @@ public class Producto {
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
+	public boolean isHabilitado() { return habilitado; }
+	public void setHabilitado(boolean habilitado) { this.habilitado = habilitado; }
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private String descripcion;
+	private Double precio;
+	private boolean habilitado;
 
 	@Override
 	public String toString() {
-		return "Producto{" +
-				"id=" + id +
-				", descripcion='" + descripcion + '\'' +
-				", precio=" + precio +
-				'}';
+		StringBuilder sb = new StringBuilder();
+		sb.append("Id: ").append(this.id).append("\n");
+		sb.append("Descripción: ").append(this.descripcion).append("\n");
+		sb.append("Precio: ").append(this.precio).append("\n");
+		sb.append("Habilitado: ").append(this.habilitado).append("\n");
+		return sb.toString();
 	}
 }
