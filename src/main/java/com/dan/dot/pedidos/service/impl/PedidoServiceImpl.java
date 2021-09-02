@@ -59,14 +59,6 @@ public class PedidoServiceImpl implements PedidoService {
         return p;
     }
 
-    private boolean generaSaldoDeudor(Pedido p) { //NECESITO CLIENTE O CUENTA CORRIENTE SERVICE
-        return false; //Hardcodeado para que no genere un saldo deudor
-    }
-
-    private boolean validarStockProductos(List<DetallePedido> detalle) { //NECESITO STOCK SERVICE
-        return true; //Hardcodeado para que siempre haya stock de los productos
-    }
-
     @Override
     public Pedido actualizarPedido(Integer id, Pedido p) throws ProblemaCrediticioException, RecursoNoEncontradoException {
 
@@ -124,7 +116,7 @@ public class PedidoServiceImpl implements PedidoService {
             if(!dp.isPresent()){
                 throw new RecursoNoEncontradoException("Detalle Pedido no encontrado con ID:", idPedido);
             }
-        }else{
+        } else{
             throw new RecursoNoEncontradoException("Cliente no encontrado con ID:", idPedido);
         }
 
@@ -133,33 +125,18 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public List<Pedido> buscarPedidosPorIdObra(Integer idObra) {
-        List<Pedido> lp = (List<Pedido>) listarPedidos()
-                .stream()
-                .filter(unPed -> unPed.getObra().getId().equals(idObra))
-                .collect(Collectors.toList());
-
-        return lp;
+        return this.pedidoRepository.findPedidosByObraId(idObra);
     }
 
-    @Override
-    public List<Pedido> buscarPedidosPorIdCliente(String idCliente) {
-        /*
-        List<Pedido> lp = (List<Pedido>) listarPedidos()
-                .stream()
-                .filter(unPed -> unPed.getObra().getIdCliente().equals(idCliente));
-        */
-        return new ArrayList<Pedido>();
-    }
-
-    @Override
-    public List<Pedido> buscarPedidosPorCuit(String cuit) {
-        /*
-        List<Pedido> lp = (List<Pedido>) listarPedidos()
-                .stream()
-                .filter(unPed -> unPed.getObra().getIdCliente().equals(idCliente));
-        */
-        return new ArrayList<Pedido>();
-    }
+//    @Override
+//    public List<Pedido> buscarPedidosPorIdCliente(String idCliente) {
+//        /*
+//        List<Pedido> lp = (List<Pedido>) listarPedidos()
+//                .stream()
+//                .filter(unPed -> unPed.getObra().getIdCliente().equals(idCliente));
+//        */
+//        return new ArrayList<Pedido>();
+//    }
 
     @Override
     public void borrarPedido(Integer id) throws RecursoNoEncontradoException {
@@ -195,5 +172,15 @@ public class PedidoServiceImpl implements PedidoService {
         }
 
         pedidoRepository.save(p);
+    }
+
+    //TODO: Implementar este método
+    private boolean generaSaldoDeudor(Pedido p) { //NECESITO CLIENTE O CUENTA CORRIENTE SERVICE
+        return false; //Hardcodeado para que no genere un saldo deudor
+    }
+
+    //TODO: Implementar este método
+    private boolean validarStockProductos(List<DetallePedido> detalle) {
+        return true; //Hardcodeado para que siempre haya stock de los productos
     }
 }

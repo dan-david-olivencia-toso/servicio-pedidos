@@ -75,33 +75,6 @@ public class PedidoRest {
         return ResponseEntity.ok(lp);
     }
 
-    @GetMapping(path = "/cliente/{idCliente}")
-    @ApiOperation(value = "Busca pedidos por id de cliente")
-    public ResponseEntity<?> pedidoPorIdCliente(@PathVariable String idCliente){
-
-        List<Pedido> lp = null;
-        try {
-            lp = this.pedidoService.buscarPedidosPorIdCliente(idCliente);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
-        return ResponseEntity.ok(lp);
-    }
-
-    @GetMapping(path = "/cliente/cuit/{cuit}")
-    @ApiOperation(value = "Busca pedidos por cuit del cliente")
-    public ResponseEntity<?> pedidoPorCuit(@PathVariable String cuit){
-        List<Pedido> lp = null;
-        try {
-            lp = this.pedidoService.buscarPedidosPorCuit(cuit);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
-        return ResponseEntity.ok(lp);
-    }
-
     @GetMapping
     public ResponseEntity<List<Pedido>> todos(){
         return ResponseEntity.ok(pedidoService.listarPedidos());
